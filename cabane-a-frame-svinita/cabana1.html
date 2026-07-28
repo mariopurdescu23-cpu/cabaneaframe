@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="description"
+    content="A-Frame Panorama — cabană modernă pentru 2–4 persoane, în Svinița, pe Clisura Dunării."
+  />
+
+  <title>A-Frame Panorama | Cabane A-Frame Svinița</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root{
+      --cream:#f7f2e8;
+      --cream-2:#eee5d7;
+      --white:#fffdf8;
+      --ink:#1e241f;
+      --muted:#70766f;
+      --green:#425a45;
+      --green-dark:#25382b;
+      --line:rgba(37,56,43,.12);
+      --shadow:0 24px 70px rgba(39,49,42,.14);
+      --radius:28px;
+      --container:1180px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Inter",sans-serif;
+      background:var(--cream);
+      color:var(--ink);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    body.menu-open{
+      overflow:hidden;
+    }
+
+    img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font:inherit;
+    }
+
+    .container{
+      width:min(calc(100% - 40px),var(--container));
+      margin:auto;
+    }
+
+    .btn{
+      min-height:54px;
+      padding:0 26px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      border:1px solid transparent;
+      font-size:.92rem;
+      font-weight:600;
+      cursor:pointer;
+      transition:.25s ease;
+    }
+
+    .btn-light{
+      color:var(--green-dark);
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(12px);
+    }
+
+    .btn-light:hover{
+      background:#fff;
+      transform:translateY(-2px);
+    }
+
+    .btn-outline{
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.35);
+    }
+
+    .btn-outline:hover{
+      color:var(--green-dark);
+      background:#fff;
+      transform:translateY(-2px);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:18px;
+      font-size:.76rem;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:34px;
+      height:1px;
+      background:currentColor;
+    }
+
+    h1,
+    h2,
+    h3{
+      font-family:"Cormorant Garamond",serif;
+      line-height:.98;
+    }
+
+    .nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:1000;
+      padding:18px 0;
+      transition:.3s ease;
+    }
+
+    .nav.scrolled{
+      padding:11px 0;
+      background:rgba(247,242,232,.92);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(18px);
+    }
+
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:#fff;
+      transition:.3s ease;
+    }
+
+    .nav.scrolled .brand{
+      color:var(--green-dark);
+    }
+
+    .brand-mark{
+      width:44px;
+      height:44px;
+      border:1px solid currentColor;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.45rem;
+      font-weight:700;
+    }
+
+    .brand-text{
+      line-height:1.05;
+    }
+
+    .brand-text strong{
+      display:block;
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.2rem;
+    }
+
+    .brand-text span{
+      display:block;
+      margin-top:4px;
+      font-size:.68rem;
+      text-transform:uppercase;
+      letter-spacing:.15em;
+      opacity:.75;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      color:#fff;
+      font-size:.88rem;
+      font-weight:500;
+    }
+
+    .nav.scrolled .nav-links{
+      color:var(--ink);
+    }
+
+    .nav-links a{
+      transition:.2s ease;
+    }
+
+    .nav-links a:hover{
+      opacity:.65;
+    }
+
+    .nav-cta{
+      padding:10px 18px;
+      border:1px solid rgba(255,255,255,.4);
+      border-radius:999px;
+    }
+
+    .nav.scrolled .nav-cta{
+      color:#fff;
+      background:var(--green-dark);
+      border-color:var(--green-dark);
+    }
+
+    .menu-btn{
+      width:46px;
+      height:46px;
+      border:0;
+      border-radius:50%;
+      display:none;
+      place-items:center;
+      background:rgba(255,255,255,.14);
+      cursor:pointer;
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after{
+      content:"";
+      display:block;
+      width:20px;
+      height:2px;
+      background:#fff;
+      transition:.25s ease;
+    }
+
+    .menu-btn span{
+      position:relative;
+    }
+
+    .menu-btn span::before{
+      position:absolute;
+      top:-6px;
+    }
+
+    .menu-btn span::after{
+      position:absolute;
+      top:6px;
+    }
+
+    .menu-btn.active span{
+      background:transparent;
+    }
+
+    .menu-btn.active span::before{
+      top:0;
+      transform:rotate(45deg);
+    }
+
+    .menu-btn.active span::after{
+      top:0;
+      transform:rotate(-45deg);
+    }
+
+    .nav.scrolled .menu-btn{
+      background:#fff;
+    }
+
+    .nav.scrolled .menu-btn span,
+    .nav.scrolled .menu-btn span::before,
+    .nav.scrolled .menu-btn span::after{
+      background:var(--green-dark);
+    }
+
+    .nav.scrolled .menu-btn.active span{
+      background:transparent;
+    }
+
+    .hero{
+      min-height:100svh;
+      position:relative;
+      display:flex;
+      align-items:flex-end;
+      padding:170px 0 70px;
+      color:#fff;
+      overflow:hidden;
+    }
+
+    .hero-background{
+      position:absolute;
+      inset:0;
+      z-index:-3;
+    }
+
+    .hero-background img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(12,22,15,.16) 0%,
+          rgba(12,22,15,.32) 40%,
+          rgba(12,22,15,.86) 100%
+        );
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:130px;
+      background:linear-gradient(transparent,var(--cream));
+      z-index:-1;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:55px;
+      align-items:end;
+    }
+
+    .hero-copy{
+      max-width:820px;
+    }
+
+    .hero-copy h1{
+      max-width:800px;
+      font-size:clamp(4.5rem,10vw,8.7rem);
+      font-weight:600;
+      letter-spacing:-.055em;
+    }
+
+    .hero-copy p{
+      max-width:570px;
+      margin:28px 0 34px;
+      color:rgba(255,255,255,.82);
+      font-size:1.08rem;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .hero-card{
+      width:min(100%,350px);
+      justify-self:end;
+      padding:30px;
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:26px;
+      background:rgba(255,255,255,.12);
+      backdrop-filter:blur(16px);
+      box-shadow:0 22px 70px rgba(0,0,0,.18);
+    }
+
+    .hero-card small{
+      display:block;
+      margin-bottom:18px;
+      font-size:.68rem;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:rgba(255,255,255,.7);
+    }
+
+    .hero-card h2{
+      font-size:2.25rem;
+      font-weight:600;
+    }
+
+    .hero-card-list{
+      display:grid;
+      gap:13px;
+      margin-top:24px;
+      padding-top:22px;
+      border-top:1px solid rgba(255,255,255,.2);
+    }
+
+    .hero-card-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      color:rgba(255,255,255,.78);
+      font-size:.88rem;
+    }
+
+    .hero-card-item strong{
+      color:#fff;
+      font-size:.9rem;
+      font-weight:600;
+    }
+
+    .hero-scroll{
+      position:absolute;
+      left:50%;
+      bottom:26px;
+      z-index:2;
+      transform:translateX(-50%);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:rgba(255,255,255,.72);
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+    }
+
+    .hero-scroll::after{
+      content:"";
+      width:1px;
+      height:36px;
+      background:rgba(255,255,255,.55);
+    }
+
+    @media(max-width:980px){
+      .nav-links{
+        position:fixed;
+        top:78px;
+        left:20px;
+        right:20px;
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding:14px;
+        color:var(--ink) !important;
+        background:var(--white);
+        border-radius:22px;
+        box-shadow:var(--shadow);
+      }
+
+      .nav-links.open{
+        display:flex;
+      }
+
+      .nav-links a{
+        padding:14px 12px;
+        border-bottom:1px solid var(--line);
+      }
+
+      .nav-links a:last-child{
+        border-bottom:0;
+      }
+
+      .nav-cta{
+        color:#fff !important;
+        background:var(--green-dark);
+        border-color:var(--green-dark);
+        text-align:center;
+      }
+
+      .menu-btn{
+        display:grid;
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+        gap:34px;
+      }
+
+      .hero-card{
+        justify-self:start;
+      }
+    }
+        .section{
+      padding:110px 0;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:.7s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+    .details{
+      padding-top:80px;
+    }
+
+    .details-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+    }
+
+    .details-card{
+      min-height:210px;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(255,255,255,.42);
+    }
+
+    .details-card span{
+      display:block;
+      margin-bottom:28px;
+      color:var(--green);
+      font-size:.72rem;
+      letter-spacing:.16em;
+    }
+
+    .details-card strong{
+      display:block;
+      margin-bottom:10px;
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.75rem;
+      line-height:1;
+    }
+
+    .details-card p{
+      color:var(--muted);
+      font-size:.86rem;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:90px;
+      align-items:center;
+    }
+
+    .about-image{
+      height:650px;
+      overflow:hidden;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .about-copy .eyebrow,
+    .facilities-copy .eyebrow{
+      color:var(--green);
+    }
+
+    .about-copy h2,
+    .facilities-copy h2{
+      max-width:700px;
+      font-size:clamp(3rem,6vw,5.4rem);
+      font-weight:600;
+      letter-spacing:-.045em;
+    }
+
+    .about-copy p{
+      max-width:680px;
+      margin-top:24px;
+      color:var(--muted);
+    }
+
+    .about-copy .lead{
+      color:var(--ink);
+      font-size:1.08rem;
+    }
+
+    .about-link{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      margin-top:32px;
+      color:var(--green-dark);
+      font-size:.9rem;
+      font-weight:600;
+    }
+
+    .about-link span{
+      font-size:1.2rem;
+      transition:.2s ease;
+    }
+
+    .about-link:hover span{
+      transform:translateX(5px);
+    }
+
+    .facilities{
+      background:var(--white);
+    }
+
+    .facilities-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:80px;
+      align-items:center;
+    }
+
+    .facilities-intro{
+      max-width:620px;
+      margin-top:24px;
+      color:var(--muted);
+    }
+
+    .facilities-list{
+      margin-top:36px;
+    }
+
+    .facility-row{
+      display:grid;
+      grid-template-columns:48px 1fr;
+      gap:18px;
+      padding:20px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .facility-number{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:var(--cream-2);
+      color:var(--green-dark);
+      font-size:.76rem;
+      font-weight:600;
+    }
+
+    .facility-row strong{
+      display:block;
+      margin-bottom:4px;
+      font-size:.94rem;
+    }
+
+    .facility-row p{
+      color:var(--muted);
+      font-size:.84rem;
+    }
+
+    .facilities-image{
+      position:relative;
+      height:690px;
+      overflow:hidden;
+      border-radius:var(--radius);
+    }
+
+    .facilities-note{
+      position:absolute;
+      right:22px;
+      bottom:22px;
+      width:min(280px,calc(100% - 44px));
+      padding:22px;
+      border-radius:20px;
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(14px);
+    }
+
+    .facilities-note small{
+      display:block;
+      margin-bottom:8px;
+      color:var(--green);
+      font-size:.66rem;
+      text-transform:uppercase;
+      letter-spacing:.15em;
+    }
+
+    .facilities-note strong{
+      display:block;
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.55rem;
+      line-height:1.08;
+    }
+
+    .gallery{
+    background:var(--green-dark);
+    color:white;
+}
+
+.gallery .eyebrow{
+    color:white;
+}
+
+.gallery p{
+    color:rgba(255,255,255,.72);
+}
+
+.gallery-grid{
+    margin-top:55px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-auto-rows:260px;
+    gap:18px;
+}
+
+.gallery-item{
+    position:relative;
+    overflow:hidden;
+    border-radius:24px;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.45s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.05);
+}
+
+.gallery-item.large{
+    grid-column:span 2;
+    grid-row:span 2;
+}
+
+.reservation{
+    background:var(--cream-2);
+}
+
+.reservation-box{
+    padding:80px;
+    border-radius:32px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:60px;
+    align-items:center;
+    background:
+    linear-gradient(rgba(25,42,29,.82),rgba(25,42,29,.82)),
+    url("images/cabin1/contact.jpg") center/cover;
+    color:white;
+}
+
+.reservation-box h2{
+    font-size:clamp(3rem,6vw,5rem);
+}
+
+.reservation-box p{
+    margin-top:24px;
+    color:rgba(255,255,255,.75);
+}
+
+.reservation-actions{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.reservation-actions .btn{
+    width:100%;
+}
+
+footer{
+    padding:40px 0;
+    background:#18271d;
+    color:white;
+}
+
+.footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.footer-inner p{
+    color:rgba(255,255,255,.6);
+}
+
+@media(max-width:980px){
+
+.gallery-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.gallery-item.large{
+grid-column:1/3;
+}
+
+.reservation-box{
+grid-template-columns:1fr;
+padding:55px;
+}
+
+}
+
+@media(max-width:650px){
+
+.gallery-grid{
+grid-template-columns:1fr;
+}
+
+.gallery-item.large{
+grid-column:auto;
+}
+
+.reservation-box{
+padding:35px 24px;
+border-radius:24px;
+}
+
+.footer-inner{
+flex-direction:column;
+align-items:flex-start;
+}
+
+}
+
+    @media(max-width:980px){
+      .details-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .about-grid,
+      .facilities-grid{
+        grid-template-columns:1fr;
+        gap:45px;
+      }
+
+      .about-image,
+      .facilities-image{
+        height:560px;
+      }
+    }
+
+    @media(max-width:650px){
+      .section{
+        padding:78px 0;
+      }
+
+      .details-grid{
+        grid-template-columns:1fr;
+      }
+
+      .details-card{
+        min-height:auto;
+      }
+
+      .about-image,
+      .facilities-image{
+        height:450px;
+      }
+
+      .about-copy h2,
+      .facilities-copy h2{
+        font-size:clamp(2.8rem,14vw,4.2rem);
+      }
+    }
+
+    @media(max-width:650px){
+      .container{
+        width:min(calc(100% - 24px),var(--container));
+      }
+
+      .brand-text span{
+        display:none;
+      }
+
+      .hero{
+        min-height:900px;
+        padding:145px 0 70px;
+      }
+
+      .hero-copy h1{
+        font-size:clamp(3.8rem,18vw,5.8rem);
+      }
+
+      .hero-copy p{
+        font-size:.98rem;
+      }
+
+      .hero-card{
+        width:100%;
+        padding:24px;
+      }
+
+      .hero-scroll{
+        display:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+
+      <a href="index.html" class="brand">
+        <div class="brand-mark">A</div>
+
+        <div class="brand-text">
+          <strong>A-Frame Svinița</strong>
+          <span>Clisura Dunării</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Acasă</a>
+        <a href="#despre">Despre cabană</a>
+        <a href="#facilitati">Facilități</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact" class="nav-cta">Rezervă acum</a>
+      </nav>
+
+      <button
+        type="button"
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Deschide meniul"
+        aria-expanded="false"
+      >
+        <span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" id="acasa">
+
+      <div class="hero-background">
+        <img
+          src="images/cabin1/hero.jpg"
+          alt="Cabana A-Frame Panorama"
+        >
+      </div>
+
+      <div class="container hero-grid">
+
+        <div class="hero-copy">
+          <span class="eyebrow">Cabana 01 · Svinița</span>
+
+          <h1>A-Frame Panorama</h1>
+
+          <p>
+            O cabană modernă și primitoare, ideală pentru 2–4 persoane,
+            cu terasă privată, jacuzzi și priveliști superbe către natură.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-light">
+              Rezervă acum
+            </a>
+
+            <a href="#galerie" class="btn btn-outline">
+              Vezi galeria
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <small>Detalii cabană</small>
+
+          <h2>Confort în mijlocul naturii</h2>
+
+          <div class="hero-card-list">
+            <div class="hero-card-item">
+              <span>Capacitate</span>
+              <strong>2–4 persoane</strong>
+            </div>
+
+            <div class="hero-card-item">
+              <span>Relaxare</span>
+              <strong>Jacuzzi privat</strong>
+            </div>
+
+            <div class="hero-card-item">
+              <span>Exterior</span>
+              <strong>Terasă privată</strong>
+            </div>
+
+            <div class="hero-card-item">
+              <span>Conectivitate</span>
+              <strong>Wi-Fi gratuit</strong>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+      <a href="#detalii" class="hero-scroll">
+        Descoperă
+      </a>
+
+    </section>
+
+        <section class="section details" id="detalii">
+      <div class="container details-grid">
+
+        <div class="details-card reveal">
+          <span>01</span>
+          <strong>2–4 persoane</strong>
+          <p>Spațiu confortabil pentru cupluri, familii sau un grup restrâns de prieteni.</p>
+        </div>
+
+        <div class="details-card reveal">
+          <span>02</span>
+          <strong>Jacuzzi privat</strong>
+          <p>Un loc perfect pentru relaxare, indiferent de momentul zilei.</p>
+        </div>
+
+        <div class="details-card reveal">
+          <span>03</span>
+          <strong>Terasă privată</strong>
+          <p>Ideală pentru cafeaua de dimineață și serile petrecute în liniște.</p>
+        </div>
+
+        <div class="details-card reveal">
+          <span>04</span>
+          <strong>Wi-Fi gratuit</strong>
+          <p>Conectivitate disponibilă pe întreaga durată a sejurului.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section about-cabin" id="despre">
+      <div class="container about-grid">
+
+        <div class="about-image reveal">
+          <img
+            src="images/cabin1/about.jpg"
+            alt="Interior Cabana A-Frame Panorama"
+          >
+        </div>
+
+        <div class="about-copy reveal">
+          <span class="eyebrow">Despre cabană</span>
+
+          <h2>Confort și liniște într-un singur loc</h2>
+
+          <p class="lead">
+            Cabana A-Frame Panorama este alegerea ideală pentru cei care își doresc
+            câteva zile de relaxare în mijlocul naturii, fără să renunțe la confort.
+          </p>
+
+          <p>
+            Designul modern, spațiile luminoase și atmosfera caldă creează un cadru
+            primitor pentru un weekend romantic, o vacanță în familie sau o escapadă
+            alături de prieteni.
+          </p>
+
+          <p>
+            Terasa privată și jacuzzi-ul completează experiența, oferindu-ți locul
+            perfect pentru dimineți liniștite, seri relaxante și momente petrecute
+            departe de agitația cotidiană.
+          </p>
+
+          <a href="#contact" class="about-link">
+            Verifică disponibilitatea
+            <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section facilities" id="facilitati">
+      <div class="container facilities-grid">
+
+        <div class="facilities-copy reveal">
+          <span class="eyebrow">Facilități</span>
+
+          <h2>Tot ce ai nevoie pentru un sejur fără griji</h2>
+
+          <p class="facilities-intro">
+            Cabana este complet echipată pentru a-ți oferi confort,
+            intimitate și o experiență relaxantă în orice anotimp.
+          </p>
+
+          <div class="facilities-list">
+
+            <div class="facility-row">
+              <div class="facility-number">01</div>
+              <div>
+                <strong>Jacuzzi privat</strong>
+                <p>Disponibil pentru momente de relaxare în aer liber.</p>
+              </div>
+            </div>
+
+            <div class="facility-row">
+              <div class="facility-number">02</div>
+              <div>
+                <strong>Bucătărie utilată</strong>
+                <p>Dotată pentru pregătirea meselor pe durata sejurului.</p>
+              </div>
+            </div>
+
+            <div class="facility-row">
+              <div class="facility-number">03</div>
+              <div>
+                <strong>Terasă privată</strong>
+                <p>Spațiu exterior pentru relaxare și priveliști către natură.</p>
+              </div>
+            </div>
+
+            <div class="facility-row">
+              <div class="facility-number">04</div>
+              <div>
+                <strong>Wi-Fi și Smart TV</strong>
+                <p>Conectivitate și divertisment atunci când ai nevoie.</p>
+              </div>
+            </div>
+
+            <div class="facility-row">
+              <div class="facility-number">05</div>
+              <div>
+                <strong>Aer condiționat</strong>
+                <p>Temperatură confortabilă pe tot parcursul sejurului.</p>
+              </div>
+            </div>
+
+            <div class="facility-row">
+              <div class="facility-number">06</div>
+              <div>
+                <strong>Parcare privată</strong>
+                <p>Acces facil și loc de parcare în apropierea cabanei.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="facilities-image reveal">
+          <img
+            src="images/cabin1/facilities.jpg"
+            alt="Facilități Cabana A-Frame Panorama"
+          >
+
+          <div class="facilities-note">
+            <small>Experiență completă</small>
+            <strong>Confort modern, înconjurat de natură</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+        <section class="section gallery" id="galerie">
+
+      <div class="container">
+
+        <div class="section-head reveal">
+
+          <div>
+            <span class="eyebrow">Galerie</span>
+            <h2>Descoperă Cabana Panorama</h2>
+          </div>
+
+          <p>
+            Explorează fiecare colț al cabanei și bucură-te de atmosfera
+            relaxantă oferită de natură și confortul modern.
+          </p>
+
+        </div>
+
+        <div class="gallery-grid">
+
+          <div class="gallery-item large reveal">
+            <img src="images/cabin1/gallery-1.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-2.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-3.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-4.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-5.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-6.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-7.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-8.jpg" alt="">
+          </div>
+
+          <div class="gallery-item reveal">
+            <img src="images/cabin1/gallery-9.jpg" alt="">
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="section reservation" id="contact">
+
+      <div class="container">
+
+        <div class="reservation-box reveal">
+
+          <div>
+
+            <span class="eyebrow" style="color:white">
+              Rezervări
+            </span>
+
+            <h2>
+              Pregătit pentru următoarea escapadă?
+            </h2>
+
+            <p>
+              Contactează-ne pentru disponibilitate, informații
+              suplimentare și rezervări.
+            </p>
+
+          </div>
+
+          <div class="reservation-actions">
+
+            <a
+              href="tel:+40760929293"
+              class="btn btn-light"
+            >
+              Sună acum
+            </a>
+
+            <a
+              href="https://wa.me/40760929293"
+              target="_blank"
+              class="btn btn-outline"
+            >
+              WhatsApp
+            </a>
+
+            <a
+              href="https://www.booking.com/hotel/ro/cabane-a-frame-svinita.html"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline"
+            >
+              Rezervă pe Booking.com
+            </a>
+
+            <a
+              href="index.html"
+              class="btn btn-outline"
+            >
+              Înapoi la homepage
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div class="brand">
+
+        <div class="brand-mark">
+          A
+        </div>
+
+        <div class="brand-text">
+          <strong>A-Frame Svinița</strong>
+          <span>Clisura Dunării</span>
+        </div>
+
+      </div>
+
+      <p>
+        © <span id="year"></span>
+        Cabane A-Frame Svinița.
+        Toate drepturile rezervate.
+      </p>
+
+    </div>
+
+  </footer>
+
+<script>
+
+const nav=document.getElementById("nav");
+
+window.addEventListener("scroll",()=>{
+
+    nav.classList.toggle("scrolled",window.scrollY>40);
+
+});
+
+const menuBtn=document.getElementById("menuBtn");
+const navLinks=document.getElementById("navLinks");
+
+menuBtn.onclick=()=>{
+
+    menuBtn.classList.toggle("active");
+
+    navLinks.classList.toggle("open");
+
+    document.body.classList.toggle("menu-open");
+
+};
+
+navLinks.querySelectorAll("a").forEach(link=>{
+
+    link.onclick=()=>{
+
+        navLinks.classList.remove("open");
+
+        menuBtn.classList.remove("active");
+
+        document.body.classList.remove("menu-open");
+
+    }
+
+});
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("visible");
+
+}
+
+});
+
+},{threshold:.15});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+</script>
+
+</body>
+
+</html>
